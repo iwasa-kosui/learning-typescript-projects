@@ -3,28 +3,39 @@ let difficulty: number;
 let group: string;
 let title: string;
 
+type Difficulty = 1 | 2 | 3;
+type Group = "appetizer" | "entree" | "dessert";
+type Title = string;
+type Recipe = Readonly<{
+	difficulty: Difficulty;
+	group: Group;
+	title: Title;
+}>;
+
+const Recipe = {
+	new: (difficulty: Difficulty, group: Group, title: Title): Recipe => ({
+		difficulty,
+		group,
+		title,
+	}),
+	log: (recipe: Recipe) => {
+		console.log(
+			`[${recipe.group}] ${recipe.title}: ${recipe.difficulty}/3 difficulty`
+		);
+	},
+} as const;
+
 // Start with something quick and painless to prepare...
-difficulty = 1;
-group = "appetizer";
-title = "Raspberry Vinaigrette Salad";
-console.log(`[${group}] ${title}: ${difficulty}/3 difficulty`);
+const recipe1 = Recipe.new(1, "appetizer", "Raspberry Vinaigrette Salad");
+Recipe.log(recipe1);
 
-// Next up, a nice hearty dish to center the meal...
-difficulty = 2;
-group = "entree";
-title = "Cauliflower Steaks";
-console.log(`[${group}] ${title}: ${difficulty}/3 difficulty`);
+const recipe2 = Recipe.new(2, "entree", "Cauliflower Steaks");
+Recipe.log(recipe2);
 
-// Make a real impact with fancy delectable desserts...
-difficulty = 3;
-group = "dessert";
-title = "Coconut Chocolate Ganache";
-console.log(`[${group}] ${title}: ${difficulty}/3 difficulty`);
+const recipe3 = Recipe.new(3, "dessert", "Coconut Chocolate Ganache");
+Recipe.log(recipe3);
 
-// Send everyone off with a nice closer.
-difficulty = 1;
-group = "desert";
-title = "Biscuits and Coffee";
-console.log(`[${group}] ${title}: ${difficulty}/3 difficulty`);
+const recipe4 = Recipe.new(1, "dessert", "Biscuits and Coffee");
+Recipe.log(recipe4);
 
 export {};
